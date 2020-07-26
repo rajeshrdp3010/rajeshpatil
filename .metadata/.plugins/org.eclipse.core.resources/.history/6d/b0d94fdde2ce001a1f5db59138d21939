@@ -1,0 +1,5 @@
+package com.product.order.config;
+
+public class H2JpaConfig {
+
+}

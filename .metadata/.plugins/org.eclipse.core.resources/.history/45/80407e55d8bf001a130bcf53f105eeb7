@@ -1,0 +1,14 @@
+package com.java8.practise;
+
+import java.util.List;
+
+public class ArraySum {
+
+	public static void main(String[] args) {
+
+	}
+
+	private static void permutations(List<List<Integer>> resultList,List<Integer> tempList,int[] nums,int start) {
+		
+	}
+}

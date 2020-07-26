@@ -1,0 +1,20 @@
+package com.java8.practise;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ArraySum {
+
+	public static void main(String[] args) {
+
+	}
+
+	private static void permutations(List<List<Integer>> resultList,List<Integer> tempList,int[] nums,int start) {
+		if (!tempList.isEmpty()) {
+			resultList.add(new ArrayList<>(tempList));
+		}
+		for (int i = start; i < nums.length ; i++) {
+			
+		}
+	}
+}

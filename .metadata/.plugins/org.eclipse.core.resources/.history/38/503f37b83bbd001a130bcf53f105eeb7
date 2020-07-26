@@ -1,0 +1,8 @@
+package com.java8.practise;
+
+public class EmployeeRepository {
+	
+	public static Employee findById(Integer id) {
+		return new Employee(id,"test",56,19000);
+	}
+}

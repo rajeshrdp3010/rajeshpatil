@@ -1,0 +1,57 @@
+package com.java8.practise;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+public class Test {
+
+	public static void main(String[] args) {
+		
+		List<String> numbers = Arrays.asList("1", "2", "3", "4", "5", "6");
+		System.out.println("original empList: " + numbers);
+		List<Integer> even = numbers.stream().map(s -> Integer.valueOf(s)).filter(number -> number % 2 == 0)
+				.collect(Collectors.toList());
+		System.out.println("processed empList, only even numbers: " + even);
+
+		List<Employee> empList = Arrays.asList(new Employee(1, "ted", 34, 10000), new Employee(2, "ben", 56, 150000));
+
+		Map<Integer, List<Employee>> groupByAgeList = empList.stream()
+				.collect(Collectors.groupingBy(Employee::getAge, Collectors.toList()));
+
+		Map<Integer, List<Employee>> groupByAge = empList.stream().collect(Collectors.groupingBy(e -> e.getAge()));
+
+		Map<Integer, List<Employee>> groupByAgeLinkedHashMap = empList.stream()
+				.collect(Collectors.groupingBy(Employee::getAge, LinkedHashMap::new, Collectors.toList()));
+
+		Map<Character, List<Employee>> groupByAlphabets = empList.stream()
+				.collect(Collectors.groupingBy(e -> e.getName().charAt(0)));
+
+		Map<Integer, Employee> linkedHashMap = empList.stream().sorted(Comparator.comparingDouble(Employee::getSalary))
+				.collect(Collectors.toMap(Employee::getAge, Function.identity(), (oldVal, newVal) -> newVal,
+						LinkedHashMap<Integer, Employee>::new));
+		
+		Set<String> empNames = empList.stream()
+	            .map(Employee::getName)
+	            .collect(Collectors.toSet());
+		
+		String empNamesJoined = empList.stream()
+			      .map(Employee::getName)
+			      .collect(Collectors.joining(", "))
+			      .toString();
+		
+		Double avgSal = empList.stream()
+			      .mapToDouble(Employee::getSalary)
+			      .average()
+			      .orElseThrow(NoSuchElementException::new);
+
+		System.out.println("test");
+	}
+
+}
