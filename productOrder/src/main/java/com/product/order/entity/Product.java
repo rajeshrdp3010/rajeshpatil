@@ -1,60 +1,103 @@
 package com.product.order.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Version;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-@Entity    
-public class Product {
+import org.hibernate.validator.constraints.Range;
 
-    @Id
-    @GeneratedValue
-    private Long id;
+@Entity
+@Table(name = "product_table")
+public class Product extends AbstractEntity {
 
-    @Version
-    private Long version;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8411862967137357703L;
+	
+	@Size(max = 100 , message = "Product name is restricted to 100 characters")
+	@NotBlank(message = "Product name is required")
+	private String name;
+	
+	@Size(max = 255 , message = "Product description is restricted to 255 characters")
+	@NotBlank(message = "Product description is required")
+	private String description;
+	
+	@NotNull(message = "Quantity is required")
+	@Range(min=1, max=5000, message = "Quantity is restricted to maximum 5000")
+	private Long quantity;
 
-    private String name;
+	protected Product() {
+	}
 
-    private Long upc;
+	public Product(Long id,String name, String description, Long quantity) {
+		this.setId(id);
+		this.name = name;
+		this.description = description;
+		this.quantity = quantity;
+	}
+	
+	public Product(String name, String description, Long quantity) {
+		this.name = name;
+		this.description = description;
+		this.quantity = quantity;
+	}
 
-    protected Product() {}
+	public String getName() {
+		return name;
+	}
 
-    public Product(String name, Long upc) {
-        this.name = name;
-        this.upc = upc;
-    }
-    
-    public Long getId() {
-        return id;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public Long getVersion() {
-        return version;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public void setVersion(Long version) {
-        this.version = version;
-    }
+	public Long getQuantity() {
+		return quantity;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setQuantity(Long quantity) {
+		this.quantity = quantity;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	@Override
+	public boolean equals(Object object) {
+		if (object == this)
+			return true;
+		if ((object == null) || !(object instanceof Product))
+			return false;
 
-    public Long getUpc() {
-        return upc;
-    }
+		final Product a = (Product) object;
 
-    public void setUpc(Long upc) {
-        this.upc = upc;
-    }
+		if (this.getId() != null && a.getId() != null && this.getName() != null && a.getName() != null) {
+			return getId().equals(a.getId()) && getName().equals(a.getName());
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return this.getName().hashCode();
+	}
+	
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("Product{");
+		sb.append("id=").append(getId());
+		sb.append(", name=").append(name);
+		sb.append(", description=").append(description);
+		sb.append(", quantity=").append(quantity);
+		sb.append("}");
+		return sb.toString();
+	}
+	
 }

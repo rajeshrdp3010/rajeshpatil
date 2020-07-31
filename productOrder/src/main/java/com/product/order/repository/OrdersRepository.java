@@ -8,15 +8,12 @@ import javax.persistence.LockModeType;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.repository.CrudRepository;
 
-import com.product.order.entity.Product;
+import com.product.order.entity.Order;
 
-public interface ProductsRepository extends CrudRepository<Product, Long> {
+public interface OrdersRepository extends CrudRepository<Order, Long> {
 	@Lock(value = LockModeType.OPTIMISTIC)
-	List<Product> findByName(String name);
+	List<Order> findAll();
 	
 	@Lock(value = LockModeType.OPTIMISTIC)
-	List<Product> findAll();
-	
-	@Lock(value = LockModeType.OPTIMISTIC)
-	Optional<Product> findById(Long id);
+	Optional<Order> findById(Long id);
 }
